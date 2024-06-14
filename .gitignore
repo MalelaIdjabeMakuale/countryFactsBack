@@ -23,3 +23,4 @@ build/
 # Otros archivos ignorables
 *.tmp
 *.swp
+.vercel
