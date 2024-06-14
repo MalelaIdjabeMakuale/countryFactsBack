@@ -1,0 +1,25 @@
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de Log
+logs/
+*.log
+
+# Dependencias de node
+node_modules/
+
+# Salidas de compilación
+dist/
+build/
+
+# Configuración de IDEs
+.vscode/
+.idea/
+
+# Archivos de entorno
+.env
+
+# Otros archivos ignorables
+*.tmp
+*.swp
