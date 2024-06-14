@@ -13,7 +13,9 @@ connectMongo();
 const app = express();
 const server = http.createServer(app);
 
-app.use(cors());
+app.use(cors({
+  methods: ['GET']
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(logger('dev'));
