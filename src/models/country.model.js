@@ -1,4 +1,4 @@
-const mongoose = require ("mongoose");
+const mongoose = require('mongoose');
 
 const countrySchema = new mongoose.Schema({
   name: {
@@ -6,15 +6,13 @@ const countrySchema = new mongoose.Schema({
     trim: true,
     required: true,
     unique: true,
-  
   },
   facts: [{
     type: String,
-    trim: true
-  }]
+    trim: true,
+  }],
 });
 
-
-const Country = mongoose.model("Country", countrySchema);
+const Country = mongoose.model('Country', countrySchema);
 
 module.exports = Country;

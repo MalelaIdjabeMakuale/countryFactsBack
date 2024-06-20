@@ -1,80 +1,79 @@
-const { response } = require("express");
-const Country = require("../models/country.model.js");
-const HTTPSTATUSCODE = require("../../utils/httpStatusCode.js");
+const Country = require('../models/country.model');
+const HTTPSTATUSCODE = require('../../utils/httpStatusCode');
 
-const getCountries= async (request, response) => {
+const getCountries = async (req, res) => {
   try {
     const countries = await Country.find();
-    response.status(200).json({
+    res.status(200).json({
       status: 200,
       message: HTTPSTATUSCODE[200],
-      data: countries
+      data: countries,
     });
   } catch (error) {
-    response.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
-const getCountry = async (request, response) => {
+const getCountry = async (req, res) => {
   try {
-    const id = request.params.id;
+    const id = req.params.id;
     const country = await Country.findById(id);
     if (!country) {
-      return response.status(404).json({ message: `No se ha encontrado ${id}` });
+      return res.status(404).json({ message: `No se ha encontrado ${id}` });
     }
-    response.status(200).json(country);
+    res.status(200).json(country);
   } catch (error) {
     console.error(error.message);
-    response.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
-const createCountry = async (request, response) => {
+const createCountry = async (req, res) => {
   try {
-    const country = new Country(request.body);
+    const country = new Country(req.body);
     await country.save();
-    response.status(201).json({
-      message: "El país fue creado con éxito",
-      country: country
+    res.status(201).json({
+      message: 'El país fue creado con éxito',
+      country: country,
     });
   } catch (error) {
-    response.status(400).json({ message: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 
-const updateCountry = async (request, response) => {
+const updateCountry = async (req, res) => {
   try {
-    const id = request.params.id;
-    const body = request.body;
+    const id = req.params.id;
+    const body = req.body;
     const country = await Country.findByIdAndUpdate(id, body, { new: true });
     if (!country) {
-      return response.status(404).json({
+      return res.status(404).json({
         status: 404,
-        message: HTTPSTATUSCODE[404]
+        message: HTTPSTATUSCODE[404],
       });
     }
-    response.status(200).json({
+    res.status(200).json({
       status: 200,
       message: HTTPSTATUSCODE[200],
-      data: country
+      data: country,
     });
   } catch (error) {
     console.error(error.message);
-    response.status(400).json({ message: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 
-const deleteCountry = async (request, response) => {
+const deleteCountry = async (req, res) => {
   try {
-    const id = request.params.id;
+    const id = req.params.id;
     const country = await Country.findByIdAndDelete(id);
     if (!country) {
-      return response.status(404).json({ message: `No se ha encontrado ${id}` });
+      return res.status(404).json({ message: `No se ha encontrado ${id}` });
     }
-    response.status(200).json({ message: "Se borró el país" });
+    res.status(200).json({ message: 'Se borró el país' });
   } catch (error) {
     console.error(error.message);
-    response.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
