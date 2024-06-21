@@ -2,13 +2,14 @@ const mongoose = require('mongoose');
 
 const connectMongo = async () => {
   try {
-    conn = await mongoose.connect(process.env.MONGO_URI);
-    console.log(
-      "INFO: Conexión a base de Datos correcta:",
-      conn.connection.name
-    );
+    const conn = await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("INFO: Conexión a base de Datos correcta:", conn.connection.name);
   } catch (error) {
-    console.log(ERROR), error.message;
+    console.error("ERROR:", error.message); // Corregido el manejo del error
+    process.exit(1); // Salir del proceso con un error
   }
 };
 
