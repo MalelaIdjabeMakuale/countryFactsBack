@@ -3,18 +3,17 @@ const Country = require('../models/country.model');
 
 const getCountries = async (req, res) => {
   try {
-    const countries = await Country.find().lean();
+    const countries = await Country.find().lean().exec(); // Agrega .exec() para asegurar que la consulta se ejecute
     res.status(200).json({ data: countries });
   } catch (error) {
     console.error('Error in getCountries:', error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };
-
 const getCountry = async (req, res) => {
   try {
     const id = req.params.id;
-    const country = await Country.findById(id).lean();
+    const country = await Country.findById(id).lean().exec;
     if (!country) {
       return res.status(404).json({ message: `Country with id ${id} not found` });
     }
