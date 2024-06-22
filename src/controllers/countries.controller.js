@@ -3,28 +3,11 @@ const Country = require('../models/country.model');
 
 const getCountries = async (req, res) => {
   try {
-    // Obtener todos los países
     const countries = await Country.find();
-
-    // Recorrer los países y seleccionar un hecho aleatorio por cada país
-    const countriesWithRandomFact = countries.map(country => {
-      // Obtener un índice aleatorio para seleccionar un hecho aleatorio
-      const randomIndex = Math.floor(Math.random() * country.facts.length);
-      const randomFact = country.facts[randomIndex]; // Suponiendo que "facts" es un arreglo en el modelo
-
-      // Crear un nuevo objeto país con solo el hecho aleatorio
-      return {
-        _id: country._id,
-        name: country.name,
-        randomFact: randomFact,
-      };
-    });
-
-    // Enviar respuesta al cliente
     res.status(200).json({
       status: 200,
       message: HTTPSTATUSCODE[200],
-      data: countriesWithRandomFact,
+      data: countries,
     });
   } catch (error) {
     console.error('Error en getCountries:', error);
