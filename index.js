@@ -22,7 +22,7 @@ app.use(mongoSanitize());
 const countriesRouter = require('./src/routes/countries.routes');
 app.use('/api/factmap', countriesRouter);
 
-app.get('/api/factmap', (req, res) => {
+app.get('/', (req, res) => {
   res.status(200).json({
     message: 'Bienvenidos al servidor',
     app: 'FactMap',
