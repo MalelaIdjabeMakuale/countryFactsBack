@@ -3,13 +3,17 @@ const Country = require('../models/country.model');
 
 const getCountries = async (req, res) => {
   try {
-    const countries = await Country.find().lean().exec(); // Agrega .exec() para asegurar que la consulta se ejecute
+    const countries = await Country.aggregate([
+      { $project: { _id: 0, name: 1, fact: { $arrayElemAt: ['$facts', { $floor: { $rand: {} } }] } } }
+    ]).exec();
+
     res.status(200).json({ data: countries });
   } catch (error) {
     console.error('Error in getCountries:', error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };
+
 const getCountry = async (req, res) => {
   try {
     const id = req.params.id;
