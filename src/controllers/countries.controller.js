@@ -1,5 +1,5 @@
-const Country = require('../models/country.model');
 const HTTPSTATUSCODE = require('../../utils/httpStatusCode');
+const Country = require('../models/country.model');
 
 const getCountries = async (req, res) => {
   try {
@@ -10,7 +10,8 @@ const getCountries = async (req, res) => {
       data: countries,
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error('Error en getCountries:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 };
 
@@ -19,12 +20,12 @@ const getCountry = async (req, res) => {
     const id = req.params.id;
     const country = await Country.findById(id);
     if (!country) {
-      return res.status(404).json({ message: `No se ha encontrado ${id}` });
+      return res.status(404).json({ message: `Country with id ${id} not found` });
     }
     res.status(200).json(country);
   } catch (error) {
-    console.error(error.message);
-    res.status(500).json({ message: error.message });
+    console.error('Error en getCountry:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 };
 
@@ -33,10 +34,11 @@ const createCountry = async (req, res) => {
     const country = new Country(req.body);
     await country.save();
     res.status(201).json({
-      message: 'El país fue creado con éxito',
+      message: 'Country created successfully',
       country: country,
     });
   } catch (error) {
+    console.error('Error en createCountry:', error);
     res.status(400).json({ message: error.message });
   }
 };
@@ -58,7 +60,7 @@ const updateCountry = async (req, res) => {
       data: country,
     });
   } catch (error) {
-    console.error(error.message);
+    console.error('Error en updateCountry:', error);
     res.status(400).json({ message: error.message });
   }
 };
@@ -68,12 +70,12 @@ const deleteCountry = async (req, res) => {
     const id = req.params.id;
     const country = await Country.findByIdAndDelete(id);
     if (!country) {
-      return res.status(404).json({ message: `No se ha encontrado ${id}` });
+      return res.status(404).json({ message: `Country with id ${id} not found` });
     }
-    res.status(200).json({ message: 'Se borró el país' });
+    res.status(200).json({ message: 'Country deleted' });
   } catch (error) {
-    console.error(error.message);
-    res.status(500).json({ message: error.message });
+    console.error('Error en deleteCountry:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 };
 
