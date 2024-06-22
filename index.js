@@ -6,6 +6,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const http = require('http');
 const connectMongo = require('./utils/db');
 const HTTPSTATUSCODE = require('./utils/httpStatusCode');
+const countriesRouter = require('./src/routes/countries.routes');
 
 const app = express();
 const server = http.createServer(app);
@@ -19,7 +20,7 @@ app.use(logger('dev'));
 app.use(mongoSanitize());
 
 /* ROUTES */
-const countriesRouter = require('./src/routes/countries.routes');
+
 app.use('/api/factmap', countriesRouter);
 
 app.get('/', (req, res) => {
@@ -31,15 +32,15 @@ app.get('/', (req, res) => {
 
 // Manejo de errores
 app.use((req, res, next) => {
-  const error = new Error();
+  const error = new Error('Not Found');
   error.status = 404;
-  error.message = HTTPSTATUSCODE[404];
   next(error);
 });
 
-app.use((error, req, res, next) => {
-  return res.status(error.status || 500).json({
-    message: error.message || 'Unexpected error',
+app.use((err, req, res, next) => {
+  console.error('Error en la aplicación:', err);
+  res.status(err.status || 500).json({
+    message: err.message || 'Unexpected error',
   });
 });
 
