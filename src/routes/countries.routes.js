@@ -15,7 +15,7 @@ const {
 countriesRouter.get("/countries", getCountries);
 countriesRouter.get("/:id", getCountry);
 countriesRouter.post("/", createCountry);
-countriesRouter.patch("/:id", updateCountry);
+countriesRouter.put("/:id", updateCountry);
 countriesRouter.delete("/:id", deleteCountry);
 
 module.exports = countriesRouter;
