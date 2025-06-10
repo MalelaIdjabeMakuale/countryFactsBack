@@ -29,7 +29,7 @@ app.use(mongoSanitize());
 
 /* ROUTES */
 
-app.use("/api/factmap", countriesRouter);
+app.use("/factmap", countriesRouter);
 
 app.get("/", (req, res) => {
   res.status(200).json({
