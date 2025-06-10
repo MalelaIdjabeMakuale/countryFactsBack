@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "factsmap-17352"
-  }
+    "default": "factsmap-17352",
+    "factsmap-17352": "factsmap-17352"
+  },
+  "targets": {},
+  "etags": {}
 }
